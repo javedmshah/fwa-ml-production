@@ -1,0 +1,5 @@
+# Resource key `database` was verified in the existing Databricks App configuration.
+command: ['python', 'app.py']
+env:
+  - name: ENDPOINT_NAME
+    valueFrom: database

@@ -1,0 +1,8 @@
+# Minimal bundle root. Add tested job/pipeline definitions to resources/ as development proceeds.
+bundle:
+  name: fwa-investigation-prioritization
+
+targets:
+  dev:
+    mode: development
+    default: true

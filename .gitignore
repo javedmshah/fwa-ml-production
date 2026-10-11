@@ -1,0 +1,41 @@
+# Python caches and virtual environments
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.venv/
+venv/
+.ipynb_checkpoints/
+
+# Credentials and local configuration
+.env
+.env.*
+!.env.example
+*.pem
+*.p12
+*.pfx
+*.key
+*credentials*.json
+secrets/
+
+# Local Databricks deployment artifacts and state
+.databricks/
+.databricks_cli_auth/
+
+# Datasets, trained artifacts, and experiment runs
+/data/
+/models/
+/artifacts/
+/mlruns/
+*.parquet
+*.joblib
+*.pkl
+*.onnx
+*.pickle
+
+# Local editor and OS files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
