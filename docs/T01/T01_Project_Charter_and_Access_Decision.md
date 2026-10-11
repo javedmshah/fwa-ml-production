@@ -5,7 +5,7 @@
 **Milestone:** M1  
 **Closure status:** Technical assessment completed; team scope approval and AWS cost confirmation still need recording.
 
-## 1. Proposed project charter (approval-ready)
+## 1. Proposed project charter
 
 **Working title:** Healthcare Fraud, Waste, and Abuse (FWA) Investigation Prioritization.
 
