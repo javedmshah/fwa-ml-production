@@ -1,4 +1,4 @@
-# FWA Investigation Prioritization
+# FWA
 
 **CS 544 / CS 590 — Machine Learning in Production (Fall 2026)**
 
