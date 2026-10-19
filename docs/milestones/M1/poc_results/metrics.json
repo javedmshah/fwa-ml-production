@@ -1,0 +1,91 @@
+{
+  "champion_by_validation_pr_auc": "logistic_regression",
+  "seed": 42,
+  "n_features": 26,
+  "features": [
+    "n_claims",
+    "n_inpatient_claims",
+    "inpatient_share",
+    "reimb_sum",
+    "reimb_mean",
+    "reimb_max",
+    "reimb_std",
+    "deductible_mean",
+    "n_unique_patients",
+    "n_unique_attending",
+    "n_unique_operating",
+    "n_unique_diag_1",
+    "n_unique_drg",
+    "claim_days_mean",
+    "length_of_stay_mean",
+    "diag_codes_per_claim",
+    "proc_codes_per_claim",
+    "physicians_per_claim",
+    "patient_age_mean",
+    "patient_deceased_share",
+    "patient_chronic_mean",
+    "patient_renal_share",
+    "claims_per_patient",
+    "claims_per_attending",
+    "log_n_claims",
+    "log_reimb_sum"
+  ],
+  "results": {
+    "logistic_regression": {
+      "validation": {
+        "pr_auc": 0.7534521472183667,
+        "roc_auc": 0.9556390977443608,
+        "precision_at_20": 1.0,
+        "precision_at_50": 0.8,
+        "base_rate": 0.093711467324291
+      },
+      "test": {
+        "pr_auc": 0.7085350231072762,
+        "roc_auc": 0.9435962528604119,
+        "precision_at_20": 0.9,
+        "precision_at_50": 0.78,
+        "base_rate": 0.09359605911330049
+      },
+      "latency": {
+        "p50_ms": 4.055894500012869,
+        "p95_ms": 4.535123649995398,
+        "providers_scored": 812,
+        "note": "in-process scoring, not the network API"
+      },
+      "robustness": {
+        "noise_level": 0.05,
+        "trials": 20,
+        "top20_overlap_mean": 0.8350000000000002,
+        "top20_overlap_min": 0.75
+      }
+    },
+    "hist_gradient_boosting": {
+      "validation": {
+        "pr_auc": 0.7126378230434324,
+        "roc_auc": 0.9439312567132115,
+        "precision_at_20": 0.95,
+        "precision_at_50": 0.76,
+        "base_rate": 0.093711467324291
+      },
+      "test": {
+        "pr_auc": 0.6928032932614435,
+        "roc_auc": 0.9317612986270023,
+        "precision_at_20": 0.95,
+        "precision_at_50": 0.68,
+        "base_rate": 0.09359605911330049
+      },
+      "latency": {
+        "p50_ms": 15.694107499996335,
+        "p95_ms": 19.33519585000596,
+        "providers_scored": 812,
+        "note": "in-process scoring, not the network API"
+      },
+      "robustness": {
+        "noise_level": 0.05,
+        "trials": 20,
+        "top20_overlap_mean": 0.9574999999999999,
+        "top20_overlap_min": 0.9
+      }
+    }
+  }
+}
