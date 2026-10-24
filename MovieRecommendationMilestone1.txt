@@ -1,0 +1,44 @@
+Milestone 1: Recommendation Model and First Deployment
+Learning goals:
+
+Collect data from multiple sources and engineer features for learning
+Apply state of the art machine learning tools
+Deploy a model inference service
+Measure and compare multiple quality attributes of your model
+Practice teamwork and reflect on the process
+Tasks: Get familiar working as a team. Take notes at team meetings about how you divide the work (minimum: who is going to do what and by when).
+
+Train a model that can recommend movies for a specific user. There are many different approaches to learn models for recommendations; some consider past ratings, some use similarity between users or between movies, others may use subtle clues about how users behave about signs of what they like. You may want to look into collaborative filtering if you are not familiar; here is material from a past recitation that may be helpful.
+
+You will likely explore different kinds of models developed with different modeling techniques. Compare those models in terms of (1) some notion of prediction accuracy, (2) training cost, (3) inference cost (or throughput in production), and (4) disk or memory size of the model. For each of these qualities define a measure (described clearly enough that it could be independently reimplemented) and report results from at least two models. You can report results for entirely different models or two similar models that differ only in hyperparameters or features used.
+
+Build a model inference service that provides movie recommendations on request given your learned model (e.g. using flask). Specifically, we will start to send http calls to http://<address-of-your-virtual-machine>:8082/recommend/<userid> to which your service should respond with an ordered comma separated list of up to 20 movie IDs in a single line, from highest to lowest recommendation. We will wait for answers to our requests for at most 800ms. You can recognize whether your answer has been correctly received and parsed by a corresponding log entry in the Kafka stream (expect to see an entry <time>,<userid>,recommendation request <server>, status <200 for success>, result: <parsed recommendations>, <responsetime>).
+
+Note that users of the streaming service will immediately see recommendations you make and your recommendations may influence their behavior.
+
+For this milestone, we do not care about specifics of how you learn or deploy your model, how accurate your predictions are, or how stable your service is.
+
+Deliverables: Submit your code to GitHub and submit a short report to Gradescope that describes the following:
+
+Learning (1 page max): Briefly describe what data and what kind of machine learning technique(s) you use and why. Provide a pointer to your implementation where you train at least two different models (e.g. to GitHub or other services).
+Model comparison (1 page of text max, the table does not count toward the page limit): Define a suitable measure for all four qualities above using the three-step format (1) metric, (2) data gathered, (3) operationalization. The description should be accurate enough that one could independently reimplement and repeat the measurement without having access to your code. Provide a link to any code you wrote to conduct the measurements. Provide a table that lists the four measurement results for the two models from the previous step and argue which of these models you will use in production. For example, this table could have rows for the four measures and columns for the two models and the cells would report the measurement results.
+Prediction service (1 page max): Briefly describe how you implemented the recommendation service and how you derive a ranking from your model. Provide pointers to the relevant parts of your implementation for model training and serving recommendations (e.g. to GitHub or other services).
+Team process and meeting notes (1 page of text max, figures do not count toward the page limit): Briefly describe how your team organizes itself. What communication channels do you use? How do you divide the work? How do you assign responsibilities? What steps have you taken to avoid future teamwork problems? Include a screenshot of (or link to) notes taken at team meetings that describe how how work was divided, who was responsible for what, by when. (Also a TA will reach out to you after the milestone for a meeting talking about teamwork.)
+In this and all future milestones, page limits are not strictly enforced and can be broken if there is a good reason. We prefer precise and concise answers over long and rambling ones.
+
+Grading: The grading specifications below focus on completing the work and each part is graded pass/fail. We will not attempt to evaluate the quality of the prediction service. We will not try to distinguish between better and worse solutions, but will give full credit if the specification is met and none otherwise for each specification. For example, if the teamwork notes do not include a due date for each task then all 10 points for that part are deducted, even if the description is otherwise well done. The specifications should be clear enough that you can confidently judge yourself whether you have achieved the goal; if in doubt contact the course staff. Note that you can regain lost points by resubmitting the solution as described in the syllabus.
+
+This milestone is worth 100 points:
+
+ 10pt: The report contains a description of the data used and the learning technique selected. The text explains why this approach was chosen. The described chosen approach matches the problem.
+ 10pt: A link to the implementation of the learning step is provided. The implementation matches the description and addresses the learning problem.
+ 5pt each (up to 20pt): The report describes metrics of the four qualities explicitly in the three steps: metric, data, and operationalization. The description is clear and sufficient to independently measure the quality. A pointer to implementation of each measurement is provided. The results of the measure are reported and match to the metric description and the models.
+ 10pt: The report argues which of the compared models should be used in production.
+ 10pt: The report contains a description of the prediction service and explains how a ranking is computed.
+ 10pt: A link to the implementation of the prediction service is provided. The implementation matches the description.
+ 10pt: The report includes a description of how the team was organized, including a description of communication channels and process for work division and responsibility assignments. A screenshot of teamwork notes or a link to the notes is provided. The notes describe how the work was devided, answering who was supposed to do what by when.
+ 10pt: The prediction services successfully answers at least 2000 recommendation requests in the 24 hours before or after submission. To be successful, the answer must be well-formed and arrive within the time limit. (We use the status 200 message in the movielog for grading).
+ 10pt: The prediction service answers at least 10% of all recommendation requests in the 24 hours before or after submission with personalized recommendations (i.e., 200 status, not the same recommendation for every user).
+ 3pt (individually): The teammaker survey (on Catme) is filled out.
+ 3pt (individually): The teamwork survey for this milestone is filled out.
+ 3pt: Bonus points for social activity (see very end of this document)
