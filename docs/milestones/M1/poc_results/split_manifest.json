@@ -1,0 +1,28 @@
+{
+  "method": "stratified on PotentialFraud, split on unique Provider IDs",
+  "seed": 42,
+  "fractions": {
+    "train": 0.7,
+    "validation": 0.15,
+    "test": 0.15
+  },
+  "labels_file": "Train-1542865627584.csv",
+  "split_assignment_sha256": "f5ea90429ae0a396c3c3705a1f08aecc830f0d197a6aae0a656b9fdec6f48074",
+  "sets": {
+    "test": {
+      "providers": 812,
+      "fraud": 76,
+      "fraud_rate": 0.0936
+    },
+    "train": {
+      "providers": 3787,
+      "fraud": 354,
+      "fraud_rate": 0.0935
+    },
+    "validation": {
+      "providers": 811,
+      "fraud": 76,
+      "fraud_rate": 0.0937
+    }
+  }
+}

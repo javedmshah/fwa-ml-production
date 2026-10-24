@@ -39,3 +39,9 @@ secrets/
 .idea/
 .DS_Store
 Thumbs.db
+
+# Raw and derived data (never commit the Kaggle files or the labeled split)
+*.csv
+*.zip
+poc/output/
+!docs/milestones/M1/poc_results/*.csv

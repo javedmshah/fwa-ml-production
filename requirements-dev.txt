@@ -1,0 +1,5 @@
+# Local POC and tests (Databricks notebooks already include these libraries)
+numpy>=1.26
+pandas>=2.1
+scikit-learn>=1.5
+pytest>=8
