@@ -143,6 +143,18 @@ Each run is tagged with: Gold table version, split hash, seed, feature cutoff da
 
 **How to read it:** HGB's top 20 contains 19 "Yes" providers. Random picking would find about 2 (9.4% of 20). A 5-point drop means at most one provider in the top 20 changed under noise.
 
+## M1: MLflow Model Comparison Summary
+
+The MLflow results suggest that **Histogram Gradient Boosting (HGB) is the stronger candidate** for our FWA provider investigation-ranking system, although its advantage over Logistic Regression (LR) is modest.
+
+HGB achieves a test **Precision@20 of 0.95** (19 of 20 providers), compared with LR's 0.90 (18 of 20). HGB also slightly outperforms LR in PR-AUC (0.722 vs. 0.717), while LR achieves better ROC-AUC (0.944 vs. 0.930). Both models were evaluated on data with a 9.4% positive-label prevalence. These labels represent potential fraud rather than independently confirmed fraud.
+
+HGB demonstrates promising inference performance, with median latency of 158 ms, P95 latency of 188 ms, and zero recorded failures. Both models experience a maximum five-percentage-point Precision@20 decline in robustness testing. HGB also achieves 100% replay ranking agreement and trace completeness. However, corresponding latency and traceability measurements are missing for LR.
+
+Importantly, a simple baseline ranking providers by total reimbursement appears surprisingly competitive, raising questions about whether the models primarily capture billing volume rather than suspicious behavior.
+
+**HGB is provisionally preferred for production**, but model selection should follow complete performance comparisons, ranking-stability testing, and investigation of possible confounding factors and fairness implications.
+
 ### Cell 8: Score the test providers and check traceability (Q4)
 **What it does:** ranks all 812 test providers with the champion and adds every field from the T04 output contract:
 
