@@ -50,6 +50,10 @@ We measure four qualities, each defined in T04 as metric, data gathered and oper
 
 Champion-only service measures: **Q2** warm p95 = **0.188 s** (p50 0.158 s, 0 failures in 30 requests); **Q4** trace completeness = **20/20**, and the served top 20 exactly matches the stored scored ranking.
 
+![Model comparison table (training notebook): validation and test results, Q3 drop](evidence/02_model_comparison_table.png)
+
+![Unity Catalog model fwa_provider_ranker: version 1 with @champion alias, lineage tags and active endpoint](evidence/03_registered_model_champion.png)
+
 **Interpretation.**
 - **The champion's top 20 contains 19 proxy-positive providers**, versus 16 for the baseline and about 2 expected from random selection.
 - HGB was selected on validation and is also best on test PR-AUC and P@20. No choices were tuned on test results.
@@ -78,12 +82,20 @@ FastAPI app  fwa-provider-ranking  on Databricks Apps
 
 **Model serving.** The champion version is deployed by code: the notebook reads the `@champion` alias and creates or updates the endpoint only if the served version differs. Scale to zero keeps Free Edition usage low. Before building the API we verified that the endpoint returns **identical probabilities** to the notebook model.
 
+![Serving endpoint fwa-provider-ranker, Ready, version 1](evidence/04_serving_endpoint_ready.png)
+
 **API.** The FastAPI app (`app.py`, `app.yaml`, `requirements.txt`) is kept separate from the training notebook. The notebook exports two handoff files: `cohort.csv` (the frozen 812-provider scoring cohort with its 42 features) and `app_config.json` (model name and version, run ID, endpoint, data snapshot, cutoff date, split fingerprint, feature list). The app runs as its own service principal, which has only **Can Query** on the endpoint (least privilege).
 
 - **`/health`** reports the endpoint state, the served model version, whether it matches the configured version, and the cohort size.
 - **`/recommendations?limit=20`** sends the cohort to the endpoint in one request, sorts providers by score (ties broken by provider ID, so the order is deterministic), and returns the top N. If fewer than N providers are eligible it answers "top-N not evaluable". If the model is unreachable it returns HTTP 503 instead of failing silently.
 
 **Output contract (each recommendation row):** `rank`, `provider_id`, `risk_score`, `model_version`, `run_id`, `scored_at_utc`, `dataset_snapshot_id`, `feature_cutoff_at`, `score_semantics`; each response also carries a `request_id`, `providers_scored` and `latency_ms`.
+
+![Interactive API documentation (/docs)](evidence/05_api_docs.png)
+
+![/health response](evidence/06_api_health.png)
+
+![/recommendations?limit=20 response. This capture was the first request after the endpoint was idle, so latency_ms shows the ~35 s cold start; warm requests take about 0.19 s (see Q2).](evidence/07_api_recommendations.png)
 
 Sample (first row of `/recommendations?limit=20`):
 
@@ -97,11 +109,13 @@ Sample (first row of `/recommendations?limit=20`):
 
 **Latency.** Warm batch ranking of 812 providers: p50 0.158 s, **p95 0.188 s**, 0 failures in 30 requests. After the endpoint has been idle, the first request takes about **35 s** (cold start caused by scale to zero); we report it separately because it is a cost-versus-latency trade-off of the Free Edition setup.
 
+![Q2 latency and Q4 replay output](evidence/08_q2_latency_q4_replay.png)
+
 **Traceability.** Every row links back to the model version, the MLflow run, the Gold Delta version and the frozen split fingerprint. Replaying the ranking through the endpoint reproduced the stored top 20 exactly.
 
 **Not yet done.** Persisting each request in Lakebase (T15) and reading the cohort live from Delta instead of a frozen file are planned for M2.
 
-**Evidence:** step-by-step walkthrough of every notebook cell and the API in [`M1_Pipeline_Walkthrough.md`](M1_Pipeline_Walkthrough.md); screenshots in `docs/milestones/M1/evidence/` (MLflow comparison, registered model with `@champion`, serving endpoint, `/health`, `/recommendations`, `/docs`).
+**Evidence:** step-by-step walkthrough of every notebook cell and the API in [`M1_Pipeline_Walkthrough.md`](M1_Pipeline_Walkthrough.md); screenshots in `docs/milestones/M1/evidence/` (shown inline above).
 
 ---
 
