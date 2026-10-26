@@ -131,33 +131,40 @@ Sample (first row of `/recommendations?limit=20`):
 5. What will you take on for M2?
 
 ### Javed
-1.
-2.
-3.
-4.
-5.
+T01: Project charter, Databricks capability/quota decision and use boundary
+T03: Select the public FWA dataset; profile labels and files; draft data dictionary
+T04: Provider-ranking use case and four M1 quality measures
+T05: Governance: label limitations, human-review policy, model-card template
+T10: Review the four M1 report sections
+T11: M1 acceptance review and submission readiness
 
 ### Irfan
-1.
-2.
-3.
-4.
-5.
+T06: Provider-disjoint train/validation/test split and train-only preprocessing
+T07: Logistic Regression baseline on Gold features, logged in MLflow
+T12: HistGradientBoosting challenger and comparison with the baseline
+T13: FastAPI /health and /recommendations in Databricks Apps
 
 ### Vipul
-1.
-2.
-3.
-4.
-5.
+T02: Repo scaffold and Databricks CLI/Bundles smoke test
+T08: Kaggle CSVs into a UC volume; 4 Bronze Delta tables plus a checksum manifest
+T09: Gold provider features (5,410 × 42, labels separate), 16 validation checks, Lakebase schema draft
+T14: Versioned Gold snapshot and feature manifest (in progress)
+T15: Lakebase recommendation queue with model and data version IDs (in progress)
 
-**Meetings and decisions (team to fill in):**
+## Meetings and decisions
 
 | Date | Who attended | Decisions / actions | Owner | Deadline |
-|---|---|---|---|---|
-|  |  |  |  |  |
-|  |  |  |  |  |
+| --- | --- | --- | --- | --- |
+| Oct 7, 2026 | Javed, Irfan, Vipul| Lunch discussion to choose between two project options, MNG and FWA; leaning toward FWA | All | Oct 9, 2026 |
+| Oct 9, 2026 | Javed, Irfan, Vipul | Reviewed both projects' milestones and **selected FWA**. Questions for the TA: recommended approaches for model serving, and whether Databricks can be used. Actions: (1) check Databricks free-tier/education access; (2) draft the FWA project plan | all | Oct 10, 2026 |
+| Oct 19, 2026 |Javed, Irfan, Vipul| Key takeaway: in industry, validation comes before coding; future roles include model serving, drift analysis and model monitoring. Applied in the data pipeline as automated validation checks | All | — |
+| Oct 24, 2026 | Javed, Irfan, Vipul | Reviewed notebook code (Bronze/Silver/Gold), the T04 quality measures, the M1 report drafts and the project documents. [confirm: decisions, e.g. final metric choice] | all |
 
-**Coordination (team to fill in):** how did the team communicate (chat, meetings, GitHub pull requests), and how were tasks assigned and tracked (`docs/planning/FWA_Project_Task_Tracker.xlsx`)?
+## Coordination
+
+- **Communication:** Team meetings and chat on Microsoft Teams, with screen sharing used to review notebooks, the report and documents together.
+- **Code and review:** A shared GitHub repository (`javedmshah/fwa-ml-production`). Work is done on per-task branches and merged through pull requests reviewed by a teammate. Raw data is never committed.
+- **Platform:** One Databricks workspace. Data lives in Unity Catalog (`workspace.default`), and teammates get read access through grants.
+- **Task assignment and tracking:** `docs/planning/FWA_Project_Task_Tracker.xlsx` lists each task (T01–T45) with week, start and due dates, owner, estimated hours, required evidence, dependencies, milestone (M1–M4) and status (Not started / In Progress / In Review / Done). Owners follow role lines: Javed (governance and configuration), Irfan (ML and software), Vipul (data engineering and databases). A task closes only when its evidence is linked and a teammate has reviewed it.
 
 **What we would change for M2 (team to fill in):**
